@@ -16,8 +16,9 @@
 %token CNST_PI CNST_E
 %token EXIT EOL
 
-%left  PLUS MINUS TIMES DIVIDE
+%left  PLUS MINUS
 %right POWER UMINUS
+%left  TIMES DIVIDE
 %right FN_SQRT FN_LOG FN_ASIN FN_ACOS FN_ATAN FN_SIN FN_COS FN_TAN
 
 %type <value> Expression
@@ -31,11 +32,11 @@ Lines: /* empty */
      | error EOL             { printf("Please re-enter last line: "); }
      ;
 
-Expression: Expression PLUS Expression	      { $$ = $1 + $3 }
-          | Expression MINUS Expression	      { $$ = $1 - $3 }
-          | Expression TIMES Expression	      { $$ = $1 * $3 }
+Expression: Expression TIMES Expression	      { $$ = $1 * $3 }
           | Expression DIVIDE Expression      { $$ = $1 / $3 }
           | Expression POWER Expression       { $$ = pow($1, $3) }
+          | Expression MINUS Expression	      { $$ = $1 - $3 }
+          | Expression PLUS Expression	      { $$ = $1 + $3 }
           | LPAREN Expression RPAREN          { $$ = $2 }
           | MINUS Expression %prec UMINUS     { $$ = -$2 }
           | FN_SQRT LPAREN Expression RPAREN  { $$ = sqrt($3) }

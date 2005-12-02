@@ -366,8 +366,8 @@ struct yy_trans_info
 	};
 static yyconst flex_int16_t yy_accept[54] =
     {   0,
-        0,    0,   23,   22,    1,   21,    8,    9,    5,    3,
-        4,    6,    2,    7,   22,   22,   19,   22,   22,   22,
+        0,    0,   23,   22,    1,   21,    3,    4,    5,    8,
+        9,    6,    2,    7,   22,   22,   19,   22,   22,   22,
        22,    1,    0,    2,    0,    0,    0,    0,    0,    0,
         0,   18,    0,    0,    0,    2,    0,    2,    0,    0,
         0,   16,    0,   11,   15,    0,   17,   13,   12,   14,
@@ -733,12 +733,12 @@ YY_RULE_SETUP
 case 3:
 YY_RULE_SETUP
 #line 20 "calc.l"
-{ return PLUS; }
+{ return LPAREN; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
 #line 21 "calc.l"
-{ return MINUS; }
+{ return RPAREN; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
@@ -758,12 +758,12 @@ YY_RULE_SETUP
 case 8:
 YY_RULE_SETUP
 #line 25 "calc.l"
-{ return LPAREN; }
+{ return PLUS; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
 #line 26 "calc.l"
-{ return RPAREN; }
+{ return MINUS; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP

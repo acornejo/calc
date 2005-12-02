@@ -36,12 +36,12 @@
      CNST_E = 262,
      EXIT = 263,
      EOL = 264,
-     DIVIDE = 265,
-     TIMES = 266,
-     MINUS = 267,
-     PLUS = 268,
-     UMINUS = 269,
-     POWER = 270,
+     MINUS = 265,
+     PLUS = 266,
+     UMINUS = 267,
+     POWER = 268,
+     DIVIDE = 269,
+     TIMES = 270,
      FN_TAN = 271,
      FN_COS = 272,
      FN_SIN = 273,
@@ -59,12 +59,12 @@
 #define CNST_E 262
 #define EXIT 263
 #define EOL 264
-#define DIVIDE 265
-#define TIMES 266
-#define MINUS 267
-#define PLUS 268
-#define UMINUS 269
-#define POWER 270
+#define MINUS 265
+#define PLUS 266
+#define UMINUS 267
+#define POWER 268
+#define DIVIDE 269
+#define TIMES 270
 #define FN_TAN 271
 #define FN_COS 272
 #define FN_SIN 273

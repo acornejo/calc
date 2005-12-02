@@ -17,13 +17,13 @@ real        {integer}("."{integer})?{exponent}?
 [ \t]+       { /* Skip blanks. */ }
 {real}	     { calc_lval.value=atof(calc_text);
 			   return NUMBER; }
-"+"          { return PLUS; }
-"-"          { return MINUS; }
+"("          { return LPAREN; }
+")"          { return RPAREN; }
 "*"          { return TIMES; }
 "/"          { return DIVIDE; }
 "^"          { return POWER; }
-"("          { return LPAREN; }
-")"          { return RPAREN; }
+"+"          { return PLUS; }
+"-"          { return MINUS; }
 "sqrt"       { return FN_SQRT; }
 "log"        { return FN_LOG; }
 "asin"       { return FN_ASIN; }
