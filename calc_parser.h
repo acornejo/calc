@@ -49,7 +49,10 @@
      FN_ACOS = 275,
      FN_ASIN = 276,
      FN_LOG = 277,
-     FN_SQRT = 278
+     FN_SQRT = 278,
+     XOR = 279,
+     OR = 280,
+     AND = 281
    };
 #endif
 #define NUMBER 258
@@ -73,6 +76,9 @@
 #define FN_ASIN 276
 #define FN_LOG 277
 #define FN_SQRT 278
+#define XOR 279
+#define OR 280
+#define AND 281
 
 
 
@@ -83,7 +89,7 @@ typedef union YYSTYPE {
     double value;
 } YYSTYPE;
 /* Line 1318 of yacc.c.  */
-#line 87 "calc_parser.h"
+#line 93 "calc_parser.h"
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
 # define YYSTYPE_IS_TRIVIAL 1
