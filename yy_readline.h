@@ -4,9 +4,11 @@
  *  @author   acornejo
  *  @date
  *   Created:       00:29:38 09/11/2005
- *   Last Update:   00:29:52 09/11/2005
+ *   Last Update:   18:47:45 15/03/2006
  */
 //========================================================================
+
+#include <readline/readline.h>
 
 static char *rl_line='\0';
 static char *rl_start='\0';

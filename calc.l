@@ -35,6 +35,7 @@ real        {integer}("."{integer})?{exponent}?
 "pi"         { return CNST_PI; }
 "e"          { return CNST_E; }
 "exit"		 { return EXIT; }
+"ans"        { return PREVIOUS_ANSWER; }
 \n           { return EOL; }
 
 %%

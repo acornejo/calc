@@ -5,6 +5,8 @@
 
 #define MM_PI  3.14159265358979323846
 #define MM_E   2.7182818284590452354
+
+static double lastval=0;
 %}
 
 %union
@@ -14,7 +16,7 @@
 
 %token NUMBER LPAREN RPAREN
 %token CNST_PI CNST_E
-%token EXIT EOL
+%token PREVIOUS_ANSWER EXIT EOL
 
 %left  PLUS MINUS
 %right POWER UMINUS
@@ -26,7 +28,7 @@
 
 %%
 Lines: /* empty */
-     | Lines Expression EOL  { printf("%.12g\n", $2) }
+     | Lines Expression EOL  { lastval=$2;printf("%.12g\n", $2) }
      | Lines EXIT EOL		 { return EXIT_SUCCESS; }
      | Lines EOL
      | error EOL             { printf("Please re-enter last line: "); }
@@ -47,8 +49,9 @@ Expression: Expression TIMES Expression	      { $$ = $1 * $3 }
           | FN_SIN LPAREN Expression RPAREN   { $$ = sin($3) }
           | FN_COS LPAREN Expression RPAREN   { $$ = cos($3) }
           | FN_TAN LPAREN Expression RPAREN   { $$ = tan($3) }
-          | CNST_PI                       { $$ = MM_PI }
-          | CNST_E                        { $$ = MM_E }
+          | CNST_PI                           { $$ = MM_PI }
+          | CNST_E                            { $$ = MM_E }
+          | PREVIOUS_ANSWER                   { $$ = lastval }
           | NUMBER
           ;
 %%
