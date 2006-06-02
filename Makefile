@@ -1,13 +1,12 @@
-CC = gcc
+CC = gcc -O3
 
 LEX = flex
 YACC = bison
-NAMEPREFIX = calc_
 
 
 all: calc
 
-calc: calc_parser.c calc_parser.h calc_lexer.c
+calc: calc_parser.c calc_lexer.c
 	$(CC) -lm -lreadline -o calc calc_parser.c calc_lexer.c
 
 calc_lexer.c: calc.l calc_parser.h

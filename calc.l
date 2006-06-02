@@ -11,6 +11,8 @@ digit		[0-9]
 integer     {digit}+
 exponent    [eE][+-]?{integer}
 real        {integer}("."{integer})?{exponent}?
+letter      [a-zA-Z]
+variable    {letter}+{integer}?
 
 %%
 
