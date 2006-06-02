@@ -10,9 +10,9 @@
 digit		[0-9]
 integer     {digit}+
 exponent    [eE][+-]?{integer}
-real        {integer}("."{integer})?{exponent}?
+real        ({integer}("."{integer})?|"."{integer}){exponent}?
 letter      [a-zA-Z]
-identifier  {letter}+{integer}?
+identifier  {letter}+({digit}|{letter})*
 
 %%
 

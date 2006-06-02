@@ -55,12 +55,13 @@ extern int calc_lex();
 
 %type <value> Expression
 %type <value> NUMBER
+%type <value> Assignment
 %type <name>  IDENTIFIER;
 
 %%
 Lines: /* empty */
      | Lines Expression EOL  { lastval=$2;printf("%.12g\n", $2) }
-     | Lines Assignment EOL  { }
+     | Lines Assignment EOL  { printf("%.12g\n", $2) }
      | Lines EXIT EOL		 { return EXIT_SUCCESS; }
      | Lines EOL
      | error EOL             { printf("Please re-enter last line: "); }
@@ -91,7 +92,7 @@ Expression: Expression TIMES Expression	      { $$ = $1 * $3 }
           | IDENTIFIER                        { $$ = varlist[$1] }
           ;
 
-Assignment: IDENTIFIER EQUALS Expression      { varlist[$1] = $3 }
+Assignment: IDENTIFIER EQUALS Expression      { $$ = $3; varlist[$1] = $3 }
           ;
 %%
 
