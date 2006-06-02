@@ -1,4 +1,4 @@
-CC = gcc -O3
+CC = g++ -O3
 
 LEX = flex
 YACC = bison
@@ -6,15 +6,19 @@ YACC = bison
 
 all: calc
 
-calc: calc_parser.c calc_lexer.c
-	$(CC) -lm -lreadline -o calc calc_parser.c calc_lexer.c
+calc: calc_parser.cpp calc_lexer.cpp
+	$(CC) -lm -lreadline -o calc calc_parser.cpp calc_lexer.cpp
 
-calc_lexer.c: calc.l calc_parser.h
-	$(LEX)  -Pcalc_ -ocalc_lexer.c calc.l
+calc_lexer.cpp: calc.l calc_parser.hpp
+	$(LEX)  -Pcalc_ -ocalc_lexer.cpp calc.l
 
-calc_parser.c calc_parser.h: calc.y
-	$(YACC) -pcalc_ -ocalc_parser.c -d calc.y
-	
+calc_parser.cpp calc_parser.hpp: calc.y
+	$(YACC) -pcalc_ -ocalc_parser.cpp -d calc.y
+
+small:
+	strip -x calc
+	upx calc
+
 clean:
 	rm calc_lexer.*
 	rm calc_parser.*

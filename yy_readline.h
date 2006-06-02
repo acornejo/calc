@@ -4,11 +4,13 @@
  *  @author   acornejo
  *  @date
  *   Created:       00:29:38 09/11/2005
- *   Last Update:   18:47:45 15/03/2006
+ *   Last Update:   17:30:56 02/06/2006
  */
 //========================================================================
 
+#ifndef WIN32
 #include <readline/readline.h>
+#include <readline/history.h>
 
 static char *rl_line='\0';
 static char *rl_start='\0';
@@ -52,4 +54,4 @@ static int rl_input (char *buf, const int max)
 }
 #undef YY_INPUT
 #define YY_INPUT(buf,res,max) (res=rl_input(buf,max))
-
+#endif
