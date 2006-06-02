@@ -7,6 +7,7 @@
 
 %option noyywrap
 
+blank       [ \t]+
 digit		[0-9]
 integer     {digit}+
 exponent    [eE][+-]?{integer}
@@ -16,7 +17,7 @@ identifier  {letter}+({digit}|{letter})*
 
 %%
 
-[ \t]+       { /* Skip blanks. */ }
+{blank}      { /* Skip blanks. */ }
 {real}	     { calc_lval.value=atof(calc_text);
 			   return NUMBER; }
 "="          { return EQUALS; }
