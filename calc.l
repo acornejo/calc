@@ -42,7 +42,6 @@ identifier  {letter}+({digit}|{letter})*
 "pi"         { return CNST_PI; }
 "e"          { return CNST_E; }
 "exit"		 { return EXIT; }
-"ans"        { return PREVIOUS_ANSWER; }
 {identifier} { calc_lval.name=strdup(calc_text);
                return IDENTIFIER; }
 \n           { return EOL; }
