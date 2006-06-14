@@ -72,13 +72,13 @@ Lines: /* empty */
      | error EOL             { printf("Please re-enter last line: "); }
      ;
 
-Expression: Expression TIMES Expression	      { $$ = $1 * $3 }
+Expression: Expression FACT                   { $$ = fact($1) }
+          | Expression POWER Expression	      { $$ = pow($1,$3) }
           | Expression DIVIDE Expression      { $$ = $1 / $3 }
           | Expression MODULO Expression      { $$ = ((int)$1) % ((int)$3) }
-          | Expression POWER Expression       { $$ = pow($1, $3) }
+          | Expression TIMES Expression       { $$ = $1 * $3 }
           | Expression MINUS Expression	      { $$ = $1 - $3 }
           | Expression PLUS Expression	      { $$ = $1 + $3 }
-          | Expression FACT                   { $$ = fact($1) }
           | LPAREN Expression RPAREN          { $$ = $2 }
           | MINUS Expression %prec UMINUS     { $$ = -$2 }
           | FN_SQRT LPAREN Expression RPAREN  { $$ = sqrt($3) }
