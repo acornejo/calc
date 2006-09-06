@@ -32,6 +32,17 @@ double fact(const double &nv)
     return (double)res;
 }
 
+double getVar(const char *name)
+{
+    if (varlist.find(name) == varlist.end())
+    {
+        printf("Error: Variable %s is not defined\n", name);
+        return 0;
+    }
+    else
+        return varlist[name];
+}
+
 int calc_error(char* errstr)
 {
 	printf("Error: %s\n", errstr);
@@ -93,7 +104,7 @@ Expression: Expression FACT                   { $$ = fact($1) }
           | CNST_PI                           { $$ = MM_PI }
           | CNST_E                            { $$ = MM_E }
           | NUMBER                            { $$ = $1 }
-          | IDENTIFIER                        { $$ = varlist[$1] }
+          | IDENTIFIER                        { $$ = getVar($1) }
           ;
 
 Assignment: IDENTIFIER EQUALS Expression      { $$ = $3; varlist[$1] = $3 }
