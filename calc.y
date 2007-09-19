@@ -16,6 +16,7 @@ struct ltstr
 };
 
 static std::map<const char *, double, ltstr> varlist;
+typedef std::map<const char *, double, ltstr>::iterator varlist_iter;
 
 double fact(const double &nv)
 {
@@ -43,6 +44,32 @@ double getVar(const char *name)
         return varlist[name];
 }
 
+void delVar(const char *name)
+{
+    varlist_iter item=varlist.find(name);
+
+    if (item == varlist.end())
+        printf("Error: Variable %s does not exist\n", name);
+    else
+        varlist.erase(item);
+}
+
+void printVal(const double &val)
+{
+    printf(">> %.12g\n", val);
+}
+
+void printVars()
+{
+    varlist_iter first(varlist.begin()), last(varlist.end());
+
+    while (first != last)
+    {
+        printf(">> %s = %.12g\n", first->first, first->second);
+        ++first;
+    }
+}
+
 int calc_error(char* errstr)
 {
 	printf("Error: %s\n", errstr);
@@ -60,25 +87,28 @@ extern int calc_lex();
 
 %token IDENTIFIER NUMBER EQUALS LPAREN RPAREN
 %token CNST_PI CNST_E
-%token EXIT EOL
+%token EOL
 
 %left PLUS MINUS
 %left TIMES DIVIDE MODULO
 %left FACT
 %right POWER
 %right UMINUS
+%right KW_EXIT KW_PRINT KW_WHO KW_CLEAR
 %right FN_SQRT FN_LOG FN_LN FN_ASIN FN_ACOS FN_ATAN FN_SIN FN_COS FN_TAN
 
 %type <value> Expression
 %type <value> NUMBER
-%type <value> Assignment
 %type <name>  IDENTIFIER;
 
 %%
 Lines: /* empty */
-     | Lines Expression EOL  { varlist["ans"]=$2;printf("%.12g\n", $2) }
-     | Lines Assignment EOL  { printf("%.12g\n", $2) }
-     | Lines EXIT EOL		 { return EXIT_SUCCESS; }
+     | Lines Expression EOL  { varlist["ans"]=$2; printVal($2) }
+     | Lines IDENTIFIER EQUALS Expression EOL { varlist[$2] = $4 }
+     | Lines KW_CLEAR IDENTIFIER EOL       { varlist.erase($3) }
+     | Lines KW_PRINT IDENTIFIER EOL       { printVal(getVar($3)) }
+     | Lines KW_WHO EOL                    { printVars() }
+     | Lines KW_EXIT EOL                   { return EXIT_SUCCESS; }
      | Lines EOL
      | error EOL             { printf("Please re-enter last line: "); }
      ;
@@ -107,8 +137,8 @@ Expression: Expression FACT                   { $$ = fact($1) }
           | IDENTIFIER                        { $$ = getVar($1) }
           ;
 
-Assignment: IDENTIFIER EQUALS Expression      { $$ = $3; varlist[$1] = $3 }
-          ;
+       ;
+
 %%
 
 int main()
