@@ -26,11 +26,24 @@ double fact(const double &nv)
         return -1;
     }
 
-    size_t n=(size_t)nv, res=1;
-    for (size_t i=1; i<=n; i++)
-        res*=i;
+    size_t n=(size_t)nv
+    
+    if (n < 13)
+    {
+        int ires=1;
+        for (size_t i=1; i<=n; i++)
+            ires*=i;
 
-    return (double)res;
+        return (double)ires;
+    }
+    else
+    {
+        double ires=1;
+        for (double i=1; i<=nv; i++)
+            ires*=i;
+
+        return (double)ires;
+    }
 }
 
 double getVar(const char *name)
