@@ -108,7 +108,7 @@ extern int calc_lex();
 %right POWER
 %right UMINUS
 %right KW_EXIT KW_PRINT KW_WHO KW_CLEAR
-%right FN_SQRT FN_LOG FN_LN FN_ASIN FN_ACOS FN_ATAN FN_SIN FN_COS FN_TAN
+%right FN_FLOOR FN_CEIL FN_SQRT FN_LOG FN_LN FN_ASIN FN_ACOS FN_ATAN FN_SIN FN_COS FN_TAN
 
 %type <value> Expression
 %type <value> NUMBER
@@ -135,6 +135,8 @@ Expression: Expression FACT                   { $$ = fact($1) }
           | Expression PLUS Expression	      { $$ = $1 + $3 }
           | LPAREN Expression RPAREN          { $$ = $2 }
           | MINUS Expression %prec UMINUS     { $$ = -$2 }
+          | FN_FLOOR LPAREN Expression RPAREN  { $$ = floor($3) }
+          | FN_CEIL LPAREN Expression RPAREN  { $$ = ceil($3) }
           | FN_SQRT LPAREN Expression RPAREN  { $$ = sqrt($3) }
           | FN_LOG  LPAREN Expression RPAREN  { $$ = log($3)/log(10) }
           | FN_LN   LPAREN Expression RPAREN  { $$ = log($3) }

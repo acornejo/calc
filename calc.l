@@ -34,6 +34,8 @@ identifier  {letter}+({digit}|{letter})*
 "print"      { return KW_PRINT; }
 "clear"      { return KW_CLEAR; }
 "exit"		 { return KW_EXIT; }
+"floor"      { return FN_FLOOR; }
+"ceil"       { return FN_CEIL; }
 "sqrt"       { return FN_SQRT; }
 "log"        { return FN_LOG; }
 "ln"         { return FN_LN; }
