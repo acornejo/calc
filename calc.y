@@ -26,7 +26,7 @@ double fact(const double &nv)
         return -1;
     }
 
-    size_t n=(size_t)nv
+    size_t n=(size_t)nv;
     
     if (n < 13)
     {
