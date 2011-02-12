@@ -32,6 +32,7 @@ identifier  {letter}+({digit}|{letter})*
 "!"          { return FACT; }
 "who"        { return KW_WHO; }
 "print"      { return KW_PRINT; }
+"del"        { return KW_DELETE; }
 "clear"      { return KW_CLEAR; }
 "exit"		 { return KW_EXIT; }
 "floor"      { return FN_FLOOR; }

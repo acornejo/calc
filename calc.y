@@ -1,6 +1,7 @@
 %{
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <math.h>
 #include <map>
 
@@ -107,7 +108,7 @@ extern int calc_lex();
 %left FACT
 %right POWER
 %right UMINUS
-%right KW_EXIT KW_PRINT KW_WHO KW_CLEAR
+%right KW_EXIT KW_PRINT KW_DELETE KW_WHO KW_CLEAR
 %right FN_FLOOR FN_CEIL FN_SQRT FN_LOG FN_LN FN_ASIN FN_ACOS FN_ATAN FN_SIN FN_COS FN_TAN
 
 %type <value> Expression
@@ -118,8 +119,10 @@ extern int calc_lex();
 Lines: /* empty */
      | Lines Expression EOL  { varlist["ans"]=$2; printVal($2) }
      | Lines IDENTIFIER EQUALS Expression EOL { varlist[$2] = $4 }
+     | Lines KW_CLEAR EOL                  { varlist.clear() }
      | Lines KW_CLEAR IDENTIFIER EOL       { varlist.erase($3) }
      | Lines KW_PRINT IDENTIFIER EOL       { printVal(getVar($3)) }
+     | Lines KW_DELETE IDENTIFIER EOL       { delVar($3) }
      | Lines KW_WHO EOL                    { printVars() }
      | Lines KW_EXIT EOL                   { return EXIT_SUCCESS; }
      | Lines EOL
