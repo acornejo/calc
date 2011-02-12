@@ -8,6 +8,8 @@
 #define MM_PI  3.14159265358979323846
 #define MM_E   2.7182818284590452354
 
+#define PROMPT ">>"
+
 struct ltstr
 {
    bool operator()(const char* s1, const char* s2) const
@@ -47,6 +49,21 @@ double fact(const double &nv)
     }
 }
 
+double binom(const double &n, const double &m)
+{
+    unsigned long B[(int)n+1];
+    int i, j;
+
+    B[0]=1;
+    for (i=1; i<=n; i++)
+    {
+        B[i]=1;
+        for (j=i-1; j>0; j--)
+            B[j] += B[j-1];
+    }
+    return (double)B[(int)m];
+}
+
 double getVar(const char *name)
 {
     if (varlist.find(name) == varlist.end())
@@ -63,14 +80,14 @@ void delVar(const char *name)
     varlist_iter item=varlist.find(name);
 
     if (item == varlist.end())
-        printf("Error: Variable %s does not exist\n", name);
+        printf("Error: Variable %s does not exist.\n%s ", name, PROMPT);
     else
         varlist.erase(item);
 }
 
-void printVal(const double &val)
+void printVar(const char *name)
 {
-    printf(">> %.12g\n", val);
+    printf("\n%s =\n\n    %.12g\n\n%s ", name, varlist[name], PROMPT);
 }
 
 void printVars()
@@ -79,14 +96,15 @@ void printVars()
 
     while (first != last)
     {
-        printf(">> %s = %.12g\n", first->first, first->second);
+        printf("%s = %.12g\n", first->first, first->second);
         ++first;
     }
+    printf("\n%s ", PROMPT);
 }
 
 int calc_error(char* errstr)
 {
-	printf("Error: %s\n", errstr);
+	printf("Error: %s\n\n", errstr);
 	return EXIT_FAILURE;
 }
 
@@ -99,7 +117,7 @@ extern int calc_lex();
     char *name;
 }
 
-%token IDENTIFIER NUMBER EQUALS LPAREN RPAREN
+%token IDENTIFIER COMMA NUMBER EQUALS LPAREN RPAREN
 %token CNST_PI CNST_E
 %token EOL
 
@@ -108,8 +126,8 @@ extern int calc_lex();
 %left FACT
 %right POWER
 %right UMINUS
-%right KW_EXIT KW_PRINT KW_DELETE KW_WHO KW_CLEAR
-%right FN_FLOOR FN_CEIL FN_SQRT FN_LOG FN_LN FN_ASIN FN_ACOS FN_ATAN FN_SIN FN_COS FN_TAN
+%right KW_EXIT KW_DELETE KW_PRINT KW_WHO KW_CLEAR
+%right FN_FLOOR FN_CEIL FN_BINOM FN_SQRT FN_LOG FN_LN FN_ASIN FN_ACOS FN_ATAN FN_SIN FN_COS FN_TAN
 
 %type <value> Expression
 %type <value> NUMBER
@@ -117,16 +135,16 @@ extern int calc_lex();
 
 %%
 Lines: /* empty */
-     | Lines Expression EOL  { varlist["ans"]=$2; printVal($2) }
-     | Lines IDENTIFIER EQUALS Expression EOL { varlist[$2] = $4 }
+     | Lines Expression EOL  { varlist["ans"]=$2; printVar("ans") }
+     | Lines IDENTIFIER EQUALS Expression EOL { varlist[$2] = $4; printVar($2) }
      | Lines KW_CLEAR EOL                  { varlist.clear() }
      | Lines KW_CLEAR IDENTIFIER EOL       { varlist.erase($3) }
-     | Lines KW_PRINT IDENTIFIER EOL       { printVal(getVar($3)) }
-     | Lines KW_DELETE IDENTIFIER EOL       { delVar($3) }
+     | Lines KW_PRINT IDENTIFIER EOL       { printVar($3) }
+     | Lines KW_DELETE IDENTIFIER EOL      { delVar($3) }
      | Lines KW_WHO EOL                    { printVars() }
      | Lines KW_EXIT EOL                   { return EXIT_SUCCESS; }
-     | Lines EOL
-     | error EOL             { printf("Please re-enter last line: "); }
+     | Lines EOL                           { printf("%s ", PROMPT); }
+     | error EOL             
      ;
 
 Expression: Expression FACT                   { $$ = fact($1) }
@@ -138,6 +156,8 @@ Expression: Expression FACT                   { $$ = fact($1) }
           | Expression PLUS Expression	      { $$ = $1 + $3 }
           | LPAREN Expression RPAREN          { $$ = $2 }
           | MINUS Expression %prec UMINUS     { $$ = -$2 }
+          | FN_BINOM LPAREN Expression COMMA Expression RPAREN { $$ =
+          binom($3,$5)}
           | FN_FLOOR LPAREN Expression RPAREN  { $$ = floor($3) }
           | FN_CEIL LPAREN Expression RPAREN  { $$ = ceil($3) }
           | FN_SQRT LPAREN Expression RPAREN  { $$ = sqrt($3) }
@@ -161,6 +181,7 @@ Expression: Expression FACT                   { $$ = fact($1) }
 
 int main()
 {
+    printf("%s ", PROMPT);
     return calc_parse();
 }
 

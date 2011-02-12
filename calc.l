@@ -8,6 +8,7 @@
 %option noyywrap
 
 blank       [ \t]+
+comma       ","
 digit		[0-9]
 integer     {digit}+
 exponent    [eE][+-]?{integer}
@@ -18,6 +19,7 @@ identifier  {letter}+({digit}|{letter})*
 %%
 
 {blank}      { /* Skip blanks. */ }
+{comma}      { return COMMA; }
 {real}	     { calc_lval.value=atof(calc_text);
 			   return NUMBER; }
 "="          { return EQUALS; }
@@ -40,6 +42,7 @@ identifier  {letter}+({digit}|{letter})*
 "sqrt"       { return FN_SQRT; }
 "log"        { return FN_LOG; }
 "ln"         { return FN_LN; }
+"binom"      { return FN_BINOM; }
 "asin"       { return FN_ASIN; }
 "acos"       { return FN_ACOS; }
 "atan"       { return FN_ATAN; }
