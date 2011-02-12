@@ -24,7 +24,7 @@ static int rl_input (char *buf, const int max)
     {
         if (rl_start)
             free(rl_start);
-        rl_start =(char *)readline("");
+        rl_start =(char *)readline(">> ");
         if (rl_start == NULL)
             return 0;
         rl_line = rl_start;
