@@ -8,8 +8,6 @@
 #define MM_PI  3.14159265358979323846
 #define MM_E   2.7182818284590452354
 
-#define PROMPT ">>"
-
 struct ltstr
 {
    bool operator()(const char* s1, const char* s2) const
@@ -80,14 +78,14 @@ void delVar(const char *name)
     varlist_iter item=varlist.find(name);
 
     if (item == varlist.end())
-        printf("Error: Variable %s does not exist.\n%s ", name, PROMPT);
+        printf("Error: Variable %s does not exist.\n", name);
     else
         varlist.erase(item);
 }
 
 void printVar(const char *name)
 {
-    printf("\n%s =\n\n    %.12g\n\n%s ", name, varlist[name], PROMPT);
+    printf("\n%s =\n\n    %.12g\n\n", name, varlist[name]);
 }
 
 void printVars()
@@ -99,7 +97,7 @@ void printVars()
         printf("%s = %.12g\n", first->first, first->second);
         ++first;
     }
-    printf("\n%s ", PROMPT);
+    printf("\n");
 }
 
 int calc_error(char* errstr)
@@ -143,7 +141,7 @@ Lines: /* empty */
      | Lines KW_DELETE IDENTIFIER EOL      { delVar($3) }
      | Lines KW_WHO EOL                    { printVars() }
      | Lines KW_EXIT EOL                   { return EXIT_SUCCESS; }
-     | Lines EOL                           { printf("%s ", PROMPT); }
+     | Lines EOL
      | error EOL             
      ;
 
@@ -181,7 +179,6 @@ Expression: Expression FACT                   { $$ = fact($1) }
 
 int main()
 {
-    printf("%s ", PROMPT);
     return calc_parse();
 }
 
