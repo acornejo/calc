@@ -5,9 +5,6 @@
 #include <math.h>
 #include <map>
 
-#define MM_PI  3.14159265358979323846
-#define MM_E   2.7182818284590452354
-
 struct ltstr
 {
    bool operator()(const char* s1, const char* s2) const
@@ -125,7 +122,7 @@ extern int calc_lex();
 %right POWER
 %right UMINUS
 %right KW_EXIT KW_DELETE KW_PRINT KW_WHO KW_CLEAR
-%right FN_FLOOR FN_CEIL FN_BINOM FN_SQRT FN_LOG FN_LN FN_ASIN FN_ACOS FN_ATAN FN_SIN FN_COS FN_TAN
+%right FN_FLOOR FN_CEIL FN_BINOM FN_SQRT FN_LOG FN_EXP FN_LN FN_ASIN FN_ACOS FN_ATAN FN_SIN FN_COS FN_TAN FN_FACT
 
 %type <value> Expression
 %type <value> NUMBER
@@ -154,12 +151,13 @@ Expression: Expression FACT                   { $$ = fact($1) }
           | Expression PLUS Expression	      { $$ = $1 + $3 }
           | LPAREN Expression RPAREN          { $$ = $2 }
           | MINUS Expression %prec UMINUS     { $$ = -$2 }
-          | FN_BINOM LPAREN Expression COMMA Expression RPAREN { $$ =
-          binom($3,$5)}
-          | FN_FLOOR LPAREN Expression RPAREN  { $$ = floor($3) }
+          | FN_BINOM LPAREN Expression COMMA Expression RPAREN { $$ = binom($3,$5) }
+          | FN_FACT LPAREN Expression RPAREN  { $$ = fact($3) }
+          | FN_FLOOR LPAREN Expression RPAREN { $$ = floor($3) }
           | FN_CEIL LPAREN Expression RPAREN  { $$ = ceil($3) }
           | FN_SQRT LPAREN Expression RPAREN  { $$ = sqrt($3) }
           | FN_LOG  LPAREN Expression RPAREN  { $$ = log($3)/log(10) }
+          | FN_EXP  LPAREN Expression RPAREN  { $$ = exp($3) }
           | FN_LN   LPAREN Expression RPAREN  { $$ = log($3) }
           | FN_ASIN LPAREN Expression RPAREN  { $$ = asin($3) }
           | FN_ACOS LPAREN Expression RPAREN  { $$ = acos($3) }
@@ -167,8 +165,8 @@ Expression: Expression FACT                   { $$ = fact($1) }
           | FN_SIN LPAREN Expression RPAREN   { $$ = sin($3) }
           | FN_COS LPAREN Expression RPAREN   { $$ = cos($3) }
           | FN_TAN LPAREN Expression RPAREN   { $$ = tan($3) }
-          | CNST_PI                           { $$ = MM_PI }
-          | CNST_E                            { $$ = MM_E }
+          | CNST_PI                           { $$ = M_PIl }
+          | CNST_E                            { $$ = M_El }
           | NUMBER                            { $$ = $1 }
           | IDENTIFIER                        { $$ = getVar($1) }
           ;

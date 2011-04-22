@@ -41,7 +41,9 @@ identifier  {letter}+({digit}|{letter})*
 "ceil"       { return FN_CEIL; }
 "sqrt"       { return FN_SQRT; }
 "log"        { return FN_LOG; }
+"exp"        { return FN_EXP; }
 "ln"         { return FN_LN; }
+"fact"       { return FN_FACT;  }
 "binom"      { return FN_BINOM; }
 "asin"       { return FN_ASIN; }
 "acos"       { return FN_ACOS; }
