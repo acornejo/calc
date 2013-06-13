@@ -7,7 +7,7 @@ YACC = bison
 all: calc
 
 calc: calc_parser.cpp calc_lexer.cpp
-	$(CC) -lm -lreadline -o calc calc_parser.cpp calc_lexer.cpp
+	$(CC) -o calc calc_parser.cpp calc_lexer.cpp -lm -lreadline
 
 calc_lexer.cpp: calc.l calc_parser.hpp
 	$(LEX)  -Pcalc_ -ocalc_lexer.cpp calc.l
