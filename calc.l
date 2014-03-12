@@ -58,8 +58,6 @@ identifier  {letter}+({digit}|{letter})*
 "logb"       { return FN_LOGB; }
 "erf"        { return FN_ERF; }
 "erfc"       { return FN_ERFC; }
-"gamma"      { return FN_GAMMA; }
-"lgamma"     { return FN_LGAMMA; }
 
 "fact"       { return FN_FACT;  }
 "binom"      { return FN_BINOM; }
