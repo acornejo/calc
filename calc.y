@@ -5,7 +5,7 @@
 #include <math.h>
 #include <map>
 
-const double DEG=M_PIl/180.0;
+const double DEG=M_PI/180.0;
 
 /***
 TODO:
@@ -208,8 +208,8 @@ Expression: Expression FACT                   { $$ = fact($1); }
           | FN_SIN LPAREN Expression RPAREN   { $$ = sin($3); }
           | FN_COS LPAREN Expression RPAREN   { $$ = cos($3); }
           | FN_TAN LPAREN Expression RPAREN   { $$ = tan($3); }
-          | CNST_PI                           { $$ = M_PIl; }
-          | CNST_E                            { $$ = M_El; }
+          | CNST_PI                           { $$ = M_PI; }
+          | CNST_E                            { $$ = M_E; }
           | NUMBER                            { $$ = $1; }
           | IDENTIFIER                        { $$ = getVar($1); }
           ;
