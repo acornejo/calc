@@ -12,8 +12,8 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-static char *rl_line='\0';
-static char *rl_start='\0';
+static char *rl_line=NULL;
+static char *rl_start=NULL;
 static int   rl_len=0;
 
 static int rl_input (char *buf, const int max)
